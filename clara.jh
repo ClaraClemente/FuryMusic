@@ -1,0 +1,25 @@
+entity Artist{
+	name String,
+    surname String,
+    birthdate LocalDate,
+    sex Character,
+    alive Boolean,
+    deathdate LocalDate
+}
+
+entity RatingArtist{
+
+    date ZonedDateTime,
+    rating Integer
+}
+
+
+relationship ManyToOne{
+
+    RatingArtist{artist(name)} to Artist{rating},
+    RatingArtist{user(login)} to User{rating}
+
+
+
+
+}
