@@ -1,25 +1,183 @@
+ entity UserExt{
+ 	image ImageBlob,
+     locationGoogleMaps String
+ }
+
+entity Country{
+	name String,
+	urlGoogleMaps String
+}
+entity Genre{
+	name String,
+    description String
+}
+entity AlbumTypes{
+	type String
+}
+
+entity Album{
+	name String,
+    releaseDate LocalDate,
+    description String,
+    img ImageBlob
+
+}
+
+entity Label{
+	name String,
+    img ImageBlob
+}
+
+entity Song{
+	name String,
+    duration Double,
+}
+
+entity Review{
+	date ZonedDateTime,
+    title String,
+    review String
+
+}
+
+
 entity Artist{
 	name String,
     surname String,
     birthdate LocalDate,
-    sex Character,
+    sex String,
     alive Boolean,
-    deathdate LocalDate
+    deathdate LocalDate,
+    img ImageBlob
 }
 
-entity RatingArtist{
+entity ArtistBandStatus{
+	incorporationDate LocalDate,
+	leavingDate LocalDate
+}
 
-    date ZonedDateTime,
-    rating Integer
+entity Band{
+	name String,
+    creationDate LocalDate,
+    active Boolean,
+    img ImageBlob
+}
+
+entity FavouriteBand{
+	liked Boolean,
+    date ZonedDateTime
+}
+
+entity FavouriteAlbum{
+	liked Boolean,
+    date ZonedDateTime
+}
+
+entity RateAlbum{
+	rate Integer,
+    date ZonedDateTime
+}
+
+entity FavouriteArtist{
+liked Boolean,
+date ZonedDateTime
+}
+
+entity Hatred{
+	hated Boolean,
+    date ZonedDateTime
+}
+
+entity FavouriteReview{
+liked Boolean,
+date ZonedDateTime
+}
+
+entity FavouriteLabel{
+liked Boolean,
+date ZonedDateTime
+}
+
+entity FavouriteSong{
+liked Boolean,
+date ZonedDateTime
+}
+
+entity Pending{
+	pending Boolean,
+    date ZonedDateTime
+}
+
+entity Collection{
+	name String,
+    description String
+}
+
+entity Concerts{
+name String,
+place String,
+latitude Double,
+longitud Double,
+urlGoogle String,
+date LocalDate
+}
+
+
+entity Social{
+	url String
 }
 
 
 relationship ManyToOne{
+	Review{album(name)} to Album,
 
-    RatingArtist{artist(name)} to Artist{rating},
-    RatingArtist{user(login)} to User{rating}
+    //FAVORITOS
+    FavouriteArtist{artist(name)} to Artist{favouriteArtist},
+    FavouriteArtist{user(login)} to User,
+    FavouriteSong{song(name)} to Song{favouriteSong},
+    FavouriteSong{user(login)}to User,
+    FavouriteAlbum{album(name)} to Album{favouriteAlbum},
+    FavouriteAlbum{user(login)} to User,
+    FavouriteReview{review(title)} to Review{favouriteReview},
+    FavouriteReview{user(login)} to User,
+    FavouriteLabel{label(name)} to Label{favouriteLabel},
+    FavouriteLabel{userlogin)} to User,
+    FavouriteBand{band(name)} to Band{},
+    FavouriteBand{user(login)} to User,
 
+    //HATRED!!!!! <= THE MOST IMPORTNATN
+    Hatred{user(login)} to User
+    Hatred{band(name)} to Band{hatred},
+    Hatred{artist(name)} to Artist{hatred},
 
+    //Listened
+    Pending{user(login)} to User
+    Pending{album(name)} to Album{pending},
+    //ALBUM TYPE
+    Album{albumType(name)} to AlbumTypes{album},
+
+    //SOCIAL
+    Social{artist(name)} to Artist{social},
+    Social{band(name)} to Band{social},
+    Social {user(login)} to User,
+
+    //CPUNTRY
+    UserExt{country(name)} to Country{userExt},
+    Artist{country(name)} to Country{artist},
+    Band{country(name)} to Country{band},
+    Label{country(name)} to Country{label}
 
 
 }
+
+relationship ManyToMany{
+	Song{album(name)} to Album{song},
+    Artist{band(name)} to Band{artist},
+      Band{genre(name)} to Genre{band}
+
+
+}
+ relationship OneToOne{
+ 	UserExt{user(login)} to User
+
+ }
