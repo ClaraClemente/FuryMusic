@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span data-translate="furyMusicApp.social.detail.title">Social</span> {{vm.social.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="furyMusicApp.social.url">Url</span></dt>
+        <dd>
+            <span>{{vm.social.url}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.social.artist">Artist</span></dt>
+        <dd>
+            <a ui-sref="artist-detail({id:vm.social.artist.id})">{{vm.social.artist.name}}</a>
+        </dd>
+        <dt><span data-translate="furyMusicApp.social.band">Band</span></dt>
+        <dd>
+            <a ui-sref="band-detail({id:vm.social.band.id})">{{vm.social.band.name}}</a>
+        </dd>
+        <dt><span data-translate="furyMusicApp.social.user">User</span></dt>
+        <dd>
+            {{vm.social.user.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="social-detail.edit({id:vm.social.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

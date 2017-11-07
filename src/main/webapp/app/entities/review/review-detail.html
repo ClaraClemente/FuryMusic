@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span data-translate="furyMusicApp.review.detail.title">Review</span> {{vm.review.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="furyMusicApp.review.date">Date</span></dt>
+        <dd>
+            <span>{{vm.review.date | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.review.title">Title</span></dt>
+        <dd>
+            <span>{{vm.review.title}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.review.review">Review</span></dt>
+        <dd>
+            <span>{{vm.review.review}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.review.album">Album</span></dt>
+        <dd>
+            <a ui-sref="album-detail({id:vm.review.album.id})">{{vm.review.album.name}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="review-detail.edit({id:vm.review.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

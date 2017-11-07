@@ -1,0 +1,36 @@
+
+<div>
+    <h2><span data-translate="furyMusicApp.label.detail.title">Label</span> {{vm.label.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="furyMusicApp.label.name">Name</span></dt>
+        <dd>
+            <span>{{vm.label.name}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.label.img">Img</span></dt>
+        <dd>
+            <div ng-if="vm.label.img">
+                <a ng-click="vm.openFile(vm.label.imgContentType, vm.label.img)">
+                    <img data-ng-src="{{'data:' + vm.label.imgContentType + ';base64,' + vm.label.img}}" style="max-width: 100%;" alt="label image"/>
+                </a>
+                {{vm.label.imgContentType}}, {{vm.byteSize(vm.label.img)}}
+            </div>
+        </dd>
+        <dt><span data-translate="furyMusicApp.label.country">Country</span></dt>
+        <dd>
+            <a ui-sref="country-detail({id:vm.label.country.id})">{{vm.label.country.name}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="label-detail.edit({id:vm.label.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

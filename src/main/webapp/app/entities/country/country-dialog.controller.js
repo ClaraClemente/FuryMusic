@@ -1,0 +1,50 @@
+(function() {
+    'use strict';
+
+    angular
+        .module('furyMusicApp')
+        .controller('CountryDialogController', CountryDialogController);
+
+    CountryDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Country', 'UserExt', 'Artist', 'Band', 'Label'];
+
+    function CountryDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Country, UserExt, Artist, Band, Label) {
+        var vm = this;
+
+        vm.country = entity;
+        vm.clear = clear;
+        vm.save = save;
+        vm.userexts = UserExt.query();
+        vm.artists = Artist.query();
+        vm.bands = Band.query();
+        vm.labels = Label.query();
+
+        $timeout(function (){
+            angular.element('.form-group:eq(1)>input').focus();
+        });
+
+        function clear () {
+            $uibModalInstance.dismiss('cancel');
+        }
+
+        function save () {
+            vm.isSaving = true;
+            if (vm.country.id !== null) {
+                Country.update(vm.country, onSaveSuccess, onSaveError);
+            } else {
+                Country.save(vm.country, onSaveSuccess, onSaveError);
+            }
+        }
+
+        function onSaveSuccess (result) {
+            $scope.$emit('furyMusicApp:countryUpdate', result);
+            $uibModalInstance.close(result);
+            vm.isSaving = false;
+        }
+
+        function onSaveError () {
+            vm.isSaving = false;
+        }
+
+
+    }
+})();

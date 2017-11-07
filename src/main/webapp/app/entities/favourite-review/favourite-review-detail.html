@@ -1,0 +1,35 @@
+
+<div>
+    <h2><span data-translate="furyMusicApp.favouriteReview.detail.title">Favourite Review</span> {{vm.favouriteReview.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="furyMusicApp.favouriteReview.liked">Liked</span></dt>
+        <dd>
+            <span>{{vm.favouriteReview.liked}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.favouriteReview.date">Date</span></dt>
+        <dd>
+            <span>{{vm.favouriteReview.date | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.favouriteReview.review">Review</span></dt>
+        <dd>
+            <a ui-sref="review-detail({id:vm.favouriteReview.review.id})">{{vm.favouriteReview.review.title}}</a>
+        </dd>
+        <dt><span data-translate="furyMusicApp.favouriteReview.user">User</span></dt>
+        <dd>
+            {{vm.favouriteReview.user.login}}
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="favourite-review-detail.edit({id:vm.favouriteReview.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

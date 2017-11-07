@@ -1,0 +1,79 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myBandLabel" data-translate="furyMusicApp.band.home.createOrEditLabel">Create or edit a Band</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.band.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.band.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.band.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                    ng-model="vm.band.name"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.band.creationDate" for="field_creationDate">Creation Date</label>
+                <div class="input-group">
+                    <input id="field_creationDate" type="text" class="form-control" name="creationDate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.band.creationDate" is-open="vm.datePickerOpenStatus.creationDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('creationDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.band.active" for="field_active">Active</label>
+                <input type="checkbox" name="active" id="field_active"
+                          ng-model="vm.band.active"/>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setImg($file, vm.band)" ngf-pattern="'image/*'">
+            <label class="control-label" data-translate="furyMusicApp.band.img" for="field_img">Img</label>
+            <div>
+                <img data-ng-src="{{'data:' + vm.band.imgContentType + ';base64,' + vm.band.img}}" style="max-height: 100px;" ng-if="vm.band.img" alt="band image"/>
+                <div ng-if="vm.band.img" class="help-block clearfix">
+                    <span class="pull-left">{{vm.band.imgContentType}}, {{vm.byteSize(vm.band.img)}}</span>
+                    <button type="button" ng-click="vm.band.img=null;vm.band.imgContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="button" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setImg($file, vm.band)" accept="image/*" data-translate="entity.action.addimage">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="img" id="field_img"
+                    ng-model="vm.band.img"
+                    />
+            <input type="hidden" class="form-control" name="imgContentType" id="field_imgContentType"
+                    ng-model="vm.band.imgContentType" />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="furyMusicApp.band.country" for="field_country">Country</label>
+            <select class="form-control" id="field_country" name="country" ng-model="vm.band.country" ng-options="country as country.name for country in vm.countries track by country.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="furyMusicApp.band.genre" for="field_genre">Genre</label>
+            <select class="form-control" id="field_genre" multiple name="genre" ng-model="vm.band.genres" ng-options="genre as genre.name for genre in vm.genres track by genre.id"></select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

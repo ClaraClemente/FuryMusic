@@ -1,0 +1,77 @@
+<div>
+    <h2 data-translate="furyMusicApp.artist.home.title">Artists</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="artist.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="furyMusicApp.artist.home.createLabel">
+                        Create new Artist
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="furyMusicApp.artist.name">Name</span></th>
+                    <th><span data-translate="furyMusicApp.artist.surname">Surname</span></th>
+                    <th><span data-translate="furyMusicApp.artist.birthdate">Birthdate</span></th>
+                    <th><span data-translate="furyMusicApp.artist.sex">Sex</span></th>
+                    <th><span data-translate="furyMusicApp.artist.alive">Alive</span></th>
+                    <th><span data-translate="furyMusicApp.artist.deathdate">Deathdate</span></th>
+                    <th><span data-translate="furyMusicApp.artist.img">Img</span></th>
+                    <th><span data-translate="furyMusicApp.artist.country">Country</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="artist in vm.artists track by artist.id">
+                    <td><a ui-sref="artist-detail({id:artist.id})">{{artist.id}}</a></td>
+                    <td>{{artist.name}}</td>
+                    <td>{{artist.surname}}</td>
+                        <td>{{artist.birthdate | date:'mediumDate'}}</td>
+                    <td>{{artist.sex}}</td>
+                    <td>{{artist.alive}}</td>
+                        <td>{{artist.deathdate | date:'mediumDate'}}</td>
+                    <td>
+                        <a ng-if="artist.img" ng-click="vm.openFile(artist.imgContentType, artist.img)">
+                            <img data-ng-src="{{'data:' + artist.imgContentType + ';base64,' + artist.img}}" style="max-height: 30px;" alt="artist image"/>
+                        </a>
+                        <span ng-if="artist.img">{{artist.imgContentType}}, {{vm.byteSize(artist.img)}}</span>
+                    </td>
+                    <td>
+                        <a ui-sref="country-detail({id:artist.country.id})">{{artist.country.name}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="artist-detail({id:artist.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="artist.edit({id:artist.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="artist.delete({id:artist.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myArtistBandStatusLabel" data-translate="furyMusicApp.artistBandStatus.home.createOrEditLabel">Create or edit a Artist Band Status</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.artistBandStatus.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.artistBandStatus.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.artistBandStatus.incorporationDate" for="field_incorporationDate">Incorporation Date</label>
+                <div class="input-group">
+                    <input id="field_incorporationDate" type="text" class="form-control" name="incorporationDate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.artistBandStatus.incorporationDate" is-open="vm.datePickerOpenStatus.incorporationDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('incorporationDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.artistBandStatus.leavingDate" for="field_leavingDate">Leaving Date</label>
+                <div class="input-group">
+                    <input id="field_leavingDate" type="text" class="form-control" name="leavingDate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.artistBandStatus.leavingDate" is-open="vm.datePickerOpenStatus.leavingDate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('leavingDate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="furyMusicApp.artistBandStatus.artist" for="field_artist">Artist</label>
+            <select class="form-control" id="field_artist" name="artist" ng-model="vm.artistBandStatus.artist" ng-options="artist as artist.name for artist in vm.artists track by artist.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="furyMusicApp.artistBandStatus.band" for="field_band">Band</label>
+            <select class="form-control" id="field_band" name="band" ng-model="vm.artistBandStatus.band" ng-options="band as band.name for band in vm.bands track by band.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

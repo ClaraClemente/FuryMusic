@@ -1,0 +1,56 @@
+
+<div>
+    <h2><span data-translate="furyMusicApp.artist.detail.title">Artist</span> {{vm.artist.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="furyMusicApp.artist.name">Name</span></dt>
+        <dd>
+            <span>{{vm.artist.name}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.artist.surname">Surname</span></dt>
+        <dd>
+            <span>{{vm.artist.surname}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.artist.birthdate">Birthdate</span></dt>
+        <dd>
+            <span>{{vm.artist.birthdate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.artist.sex">Sex</span></dt>
+        <dd>
+            <span>{{vm.artist.sex}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.artist.alive">Alive</span></dt>
+        <dd>
+            <span>{{vm.artist.alive}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.artist.deathdate">Deathdate</span></dt>
+        <dd>
+            <span>{{vm.artist.deathdate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.artist.img">Img</span></dt>
+        <dd>
+            <div ng-if="vm.artist.img">
+                <a ng-click="vm.openFile(vm.artist.imgContentType, vm.artist.img)">
+                    <img data-ng-src="{{'data:' + vm.artist.imgContentType + ';base64,' + vm.artist.img}}" style="max-width: 100%;" alt="artist image"/>
+                </a>
+                {{vm.artist.imgContentType}}, {{vm.byteSize(vm.artist.img)}}
+            </div>
+        </dd>
+        <dt><span data-translate="furyMusicApp.artist.country">Country</span></dt>
+        <dd>
+            <a ui-sref="country-detail({id:vm.artist.country.id})">{{vm.artist.country.name}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="artist-detail.edit({id:vm.artist.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

@@ -1,0 +1,44 @@
+
+<div>
+    <h2><span data-translate="furyMusicApp.album.detail.title">Album</span> {{vm.album.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="furyMusicApp.album.name">Name</span></dt>
+        <dd>
+            <span>{{vm.album.name}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.album.releaseDate">Release Date</span></dt>
+        <dd>
+            <span>{{vm.album.releaseDate | date:'mediumDate'}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.album.description">Description</span></dt>
+        <dd>
+            <span>{{vm.album.description}}</span>
+        </dd>
+        <dt><span data-translate="furyMusicApp.album.img">Img</span></dt>
+        <dd>
+            <div ng-if="vm.album.img">
+                <a ng-click="vm.openFile(vm.album.imgContentType, vm.album.img)">
+                    <img data-ng-src="{{'data:' + vm.album.imgContentType + ';base64,' + vm.album.img}}" style="max-width: 100%;" alt="album image"/>
+                </a>
+                {{vm.album.imgContentType}}, {{vm.byteSize(vm.album.img)}}
+            </div>
+        </dd>
+        <dt><span data-translate="furyMusicApp.album.albumType">Album Type</span></dt>
+        <dd>
+            <a ui-sref="album-types-detail({id:vm.album.albumType.id})">{{vm.album.albumType.type}}</a>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="album-detail.edit({id:vm.album.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-sm-down" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>

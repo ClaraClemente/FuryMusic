@@ -1,0 +1,74 @@
+<div>
+    <h2 data-translate="furyMusicApp.concerts.home.title">Concerts</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="concerts.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="furyMusicApp.concerts.home.createLabel">
+                        Create new Concerts
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="furyMusicApp.concerts.name">Name</span></th>
+                    <th><span data-translate="furyMusicApp.concerts.place">Place</span></th>
+                    <th><span data-translate="furyMusicApp.concerts.latitude">Latitude</span></th>
+                    <th><span data-translate="furyMusicApp.concerts.longitud">Longitud</span></th>
+                    <th><span data-translate="furyMusicApp.concerts.urlGoogle">Url Google</span></th>
+                    <th><span data-translate="furyMusicApp.concerts.date">Date</span></th>
+                    <th><span data-translate="furyMusicApp.concerts.band">Band</span></th>
+                    <th><span data-translate="furyMusicApp.concerts.artist">Artist</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="concerts in vm.concerts track by concerts.id">
+                    <td><a ui-sref="concerts-detail({id:concerts.id})">{{concerts.id}}</a></td>
+                    <td>{{concerts.name}}</td>
+                    <td>{{concerts.place}}</td>
+                    <td>{{concerts.latitude}}</td>
+                    <td>{{concerts.longitud}}</td>
+                    <td>{{concerts.urlGoogle}}</td>
+                        <td>{{concerts.date | date:'mediumDate'}}</td>
+                    <td>
+                        <a ui-sref="band-detail({id:concerts.band.id})">{{concerts.band.name}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="artist-detail({id:concerts.artist.id})">{{concerts.artist.name}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="concerts-detail({id:concerts.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="concerts.edit({id:concerts.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="concerts.delete({id:concerts.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

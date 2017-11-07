@@ -1,0 +1,66 @@
+<div>
+    <h2 data-translate="furyMusicApp.artistBandStatus.home.title">Artist Band Statuses</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="artist-band-status.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="furyMusicApp.artistBandStatus.home.createLabel">
+                        Create new Artist Band Status
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="furyMusicApp.artistBandStatus.incorporationDate">Incorporation Date</span></th>
+                    <th><span data-translate="furyMusicApp.artistBandStatus.leavingDate">Leaving Date</span></th>
+                    <th><span data-translate="furyMusicApp.artistBandStatus.artist">Artist</span></th>
+                    <th><span data-translate="furyMusicApp.artistBandStatus.band">Band</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="artistBandStatus in vm.artistBandStatuses track by artistBandStatus.id">
+                    <td><a ui-sref="artist-band-status-detail({id:artistBandStatus.id})">{{artistBandStatus.id}}</a></td>
+                        <td>{{artistBandStatus.incorporationDate | date:'mediumDate'}}</td>
+                        <td>{{artistBandStatus.leavingDate | date:'mediumDate'}}</td>
+                    <td>
+                        <a ui-sref="artist-detail({id:artistBandStatus.artist.id})">{{artistBandStatus.artist.name}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="band-detail({id:artistBandStatus.band.id})">{{artistBandStatus.band.name}}</a>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="artist-band-status-detail({id:artistBandStatus.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="artist-band-status.edit({id:artistBandStatus.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="artist-band-status.delete({id:artistBandStatus.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-sm-down" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myArtistLabel" data-translate="furyMusicApp.artist.home.createOrEditLabel">Create or edit a Artist</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.artist.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.artist.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.artist.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                    ng-model="vm.artist.name"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.artist.surname" for="field_surname">Surname</label>
+            <input type="text" class="form-control" name="surname" id="field_surname"
+                    ng-model="vm.artist.surname"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.artist.birthdate" for="field_birthdate">Birthdate</label>
+                <div class="input-group">
+                    <input id="field_birthdate" type="text" class="form-control" name="birthdate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.artist.birthdate" is-open="vm.datePickerOpenStatus.birthdate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('birthdate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.artist.sex" for="field_sex">Sex</label>
+            <input type="text" class="form-control" name="sex" id="field_sex"
+                    ng-model="vm.artist.sex"
+                    />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.artist.alive" for="field_alive">Alive</label>
+                <input type="checkbox" name="alive" id="field_alive"
+                          ng-model="vm.artist.alive"/>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="furyMusicApp.artist.deathdate" for="field_deathdate">Deathdate</label>
+                <div class="input-group">
+                    <input id="field_deathdate" type="text" class="form-control" name="deathdate" uib-datepicker-popup="{{dateformat}}" ng-model="vm.artist.deathdate" is-open="vm.datePickerOpenStatus.deathdate"
+                    />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('deathdate')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group" ngf-drop ngf-change="vm.setImg($file, vm.artist)" ngf-pattern="'image/*'">
+            <label class="control-label" data-translate="furyMusicApp.artist.img" for="field_img">Img</label>
+            <div>
+                <img data-ng-src="{{'data:' + vm.artist.imgContentType + ';base64,' + vm.artist.img}}" style="max-height: 100px;" ng-if="vm.artist.img" alt="artist image"/>
+                <div ng-if="vm.artist.img" class="help-block clearfix">
+                    <span class="pull-left">{{vm.artist.imgContentType}}, {{vm.byteSize(vm.artist.img)}}</span>
+                    <button type="button" ng-click="vm.artist.img=null;vm.artist.imgContentType=null;"
+                            class="btn btn-default btn-xs pull-right">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
+                <button type="button" ngf-select class="btn btn-default btn-block"
+                        ngf-change="vm.setImg($file, vm.artist)" accept="image/*" data-translate="entity.action.addimage">
+                    Add image
+                </button>
+            </div>
+            <input type="hidden" class="form-control" name="img" id="field_img"
+                    ng-model="vm.artist.img"
+                    />
+            <input type="hidden" class="form-control" name="imgContentType" id="field_imgContentType"
+                    ng-model="vm.artist.imgContentType" />
+        </div>
+
+        <div class="form-group">
+            <label data-translate="furyMusicApp.artist.country" for="field_country">Country</label>
+            <select class="form-control" id="field_country" name="country" ng-model="vm.artist.country" ng-options="country as country.name for country in vm.countries track by country.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>
