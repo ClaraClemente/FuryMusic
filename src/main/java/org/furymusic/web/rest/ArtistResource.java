@@ -89,6 +89,14 @@ public class ArtistResource {
         return artistRepository.findAll();
         }
 
+
+    @GetMapping("/artists/by-name/{name}")
+    @Timed
+    public List<Artist> getAllArtistsByName(@PathVariable String name) {
+        log.debug("REST request to get all Artists");
+        return artistRepository.findByNameContaining(name);
+    }
+
     /**
      * GET  /artists/:id : get the "id" artist.
      *

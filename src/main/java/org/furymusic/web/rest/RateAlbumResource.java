@@ -1,9 +1,15 @@
 package org.furymusic.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import org.furymusic.domain.Album;
 import org.furymusic.domain.RateAlbum;
 
+import org.furymusic.repository.AlbumRepository;
 import org.furymusic.repository.RateAlbumRepository;
+import org.furymusic.repository.UserRepository;
+import org.furymusic.security.SecurityUtils;
+import org.furymusic.service.dto.AlbumRateStats;
+import org.furymusic.service.dto.AvgRateAlbumDTO;
 import org.furymusic.web.rest.errors.BadRequestAlertException;
 import org.furymusic.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -15,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,9 +37,13 @@ public class RateAlbumResource {
     private static final String ENTITY_NAME = "rateAlbum";
 
     private final RateAlbumRepository rateAlbumRepository;
+    private final AlbumRepository albumRepository;
+    private final UserRepository userRepository;
 
-    public RateAlbumResource(RateAlbumRepository rateAlbumRepository) {
+    public RateAlbumResource(RateAlbumRepository rateAlbumRepository, AlbumRepository albumRepository, UserRepository userRepository) {
         this.rateAlbumRepository = rateAlbumRepository;
+        this.albumRepository = albumRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -49,6 +60,17 @@ public class RateAlbumResource {
         if (rateAlbum.getId() != null) {
             throw new BadRequestAlertException("A new rateAlbum cannot already have an ID", ENTITY_NAME, "idexists");
         }
+
+        Optional<RateAlbum> existingRateAlbum = rateAlbumRepository.findByAlbumAndUserLogin(rateAlbum.getAlbum(), SecurityUtils.getCurrentUserLogin());
+
+        if(existingRateAlbum.isPresent()){
+            throw new BadRequestAlertException("El usuario ya ha valorado este album", ENTITY_NAME, "rateExists");
+
+        }
+
+        rateAlbum.setDate(ZonedDateTime.now());
+        rateAlbum.setUser(userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).get());
+
         RateAlbum result = rateAlbumRepository.save(rateAlbum);
         return ResponseEntity.created(new URI("/api/rate-albums/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -101,6 +123,21 @@ public class RateAlbumResource {
         log.debug("REST request to get RateAlbum : {}", id);
         RateAlbum rateAlbum = rateAlbumRepository.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(rateAlbum));
+    }
+
+    @GetMapping("/avg-album-ratings/{id}")
+    @Timed
+    public ResponseEntity<AlbumRateStats> getAvgAlbumRatings(@PathVariable Long id) {
+        log.debug("REST request to get RateAlbum : {}", id);
+
+        AlbumRateStats stats = rateAlbumRepository.findAlbumStats(id);
+
+        if(stats.getAlbum() == null){
+            stats=null;
+        }
+
+
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(stats));
     }
 
     /**
