@@ -125,7 +125,7 @@ public class RateAlbumResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(rateAlbum));
     }
 
-    @GetMapping("/avg-album-ratings/{id}")
+    @GetMapping("/album-ratings-stats/{id}")
     @Timed
     public ResponseEntity<AlbumRateStats> getAvgAlbumRatings(@PathVariable Long id) {
         log.debug("REST request to get RateAlbum : {}", id);
